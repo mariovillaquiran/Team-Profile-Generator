@@ -19,20 +19,17 @@ function appmenu() {
           type: "input",
           name: "ManagerName",
           message: "What is your name?",
+        },
 
-          type: "input",
-          name: "ManagerId",
-          message: "What is your id?",
+        { type: "input", name: "ManagerId", message: "What is your id?" },
 
-          type: "input",
-          name: "ManagerEmail",
-          message: "What is your email?",
+        { type: "input", name: "ManagerEmail", message: "What is your email?" },
 
+        {
           type: "input",
           name: "ManagerOffice",
           message: "What is your office number?",
         },
-        // create the rest of the objects based on above
       ])
       .then((answers) => {
         const manager = new Manager(
@@ -43,12 +40,31 @@ function appmenu() {
         );
         teammember.push(manager);
         idarray.push(answers.managerid);
-        createteam();
-        //finish
-        addengineer();
-        //finish
-        addintern();
-        buildateam();
       });
   }
+  function createteam() {
+    inquire
+      .prompt([
+        {
+          type: "list",
+          name: "anyoneelse",
+          message: "Do you want to add an additional member?",
+          choices: ["Intern", "Engineer", "no"],
+        },
+      ])
+      .then((userchoice) => {
+        switch (userchoice.anyoneelse) {
+          case "Intern":
+            addintern();
+            break;
+          case "Engineer":
+            addengineer();
+            break;
+          default:
+            buildteam();
+        }
+      });
+  }
+
+  // insert new function (see above)
 }
